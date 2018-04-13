@@ -2,10 +2,6 @@ import java.io.IOException;
 
 import java.util.concurrent.CompletableFuture;
 
-/*
-@author mahongyue@guazi.com
-@date 2018/3/27
-*/
 public class Main {
     public static void main(String[] args) throws Exception {
         HttpTask task = new HttpTask();
@@ -46,5 +42,7 @@ public class Main {
         // future.get() 方法阻塞本线程，直到http请求成功
         System.out.println("-----------------阻塞位置1----------------------\n");
         System.out.println("main thread ends");
+        //防止主线程在其他线程运行完成之前退出,导致打印信息不全
+        System.in.read();
     }
 }

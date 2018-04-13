@@ -4,10 +4,6 @@ import okhttp3.Response;
 
 import java.io.IOException;
 
-/*
-@author mahongyue@guazi.com
-@date 2018/3/28
-*/
 public class HttpTask {
     public String doHttp(String url) throws IOException, InterruptedException {
         long threadId = Thread.currentThread().getId();
