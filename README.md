@@ -28,16 +28,16 @@ CompletableFuture 通过回调函数，实现非阻塞的IO的异步调用。
 
 全部Demo代码
 
-Main.java
+future.FutureMain.java
 
 ```java
 import java.io.IOException;
 
 import java.util.concurrent.CompletableFuture;
 
-public class Main {
+public class future.FutureMain {
     public static void main(String[] args) throws Exception {
-        HttpTask task = new HttpTask();
+        future.HttpTask task = new future.HttpTask();
 
         System.out.println("main thread starts in thread id: "+ Thread.currentThread().getId());
 
@@ -77,7 +77,7 @@ public class Main {
 }
 ```
 
-HttpTask.java
+future.HttpTask.java
 
 ```java
 import okhttp3.OkHttpClient;
@@ -86,7 +86,7 @@ import okhttp3.Response;
 
 import java.io.IOException;
 
-public class HttpTask {
+public class future.HttpTask {
     public String doHttp(String url) throws IOException, InterruptedException {
         long threadId = Thread.currentThread().getId();
         OkHttpClient client = new OkHttpClient();

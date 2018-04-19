@@ -1,3 +1,4 @@
+package future;
 
 public class TimeConsumingUtil {
     private Long consumingNanoTime;

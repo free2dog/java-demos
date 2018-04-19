@@ -1,8 +1,11 @@
+package future;
+
 import java.io.IOException;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 
-public class Main {
+public class FutureMain {
     public static void main(String[] args) throws Exception {
         HttpTask task = new HttpTask();
 
@@ -11,30 +14,29 @@ public class Main {
         // 新建一个Future
         CompletableFuture futureNonBlocking = CompletableFuture.supplyAsync(() -> {
             try {
-                return task.doHttp("https://guazi.com");
-            } catch (IOException e) {
+                return task.doHttp("http://guazi.com");
+            } catch (Exception e) {
                 e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                throw new CompletionException(e);
             }
-            return "error";
         });
         // 新建一个Future
         CompletableFuture futureBlocking = CompletableFuture.supplyAsync(() -> {
             try {
                 return task.doHttp("https://guazi.com");
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                throw new CompletionException(e);
             }
-            return "error";
         });
 
         // 非阻塞
         System.out.println("-----------------非阻塞位置1----------------------\n");
         // future.thenAcceptAsync() 方法不阻塞本线程，http请求成功后执行回调函数
-        futureNonBlocking.thenAcceptAsync(result -> System.out.println("\nfrom non blocking future:\n"+result+"\n"));
+
+            futureNonBlocking.thenAcceptAsync(result -> System.out.println("\nfrom non blocking future:\n"+result+"\n"));
+
+
         System.out.println("-----------------非阻塞位置2----------------------\n");
 
         // 阻塞
