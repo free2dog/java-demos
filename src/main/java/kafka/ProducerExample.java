@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
+;
+
 public class ProducerExample {
 
     private static Logger log = LoggerFactory.getLogger(ProducerExample.class);
