@@ -4,10 +4,10 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 
-public class Pi {
+public class PiMain {
     static final int numsWorkers = 4;
-    static final int numsRounds = 10000;
-    static final int numsElements = 100000;
+    static final long numsRounds = 30000;
+    static final long numsElements = 100000;
     public static void main(String... args){
         // Create an Akka system
         ActorSystem system = ActorSystem.create("PiSystem");

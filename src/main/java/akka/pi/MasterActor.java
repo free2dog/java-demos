@@ -7,17 +7,17 @@ import akka.routing.RoundRobinPool;
 
 public class MasterActor extends UntypedAbstractActor{
     int numsWorkers;
-    int numsRounds;
-    int numsElements;
+    long numsRounds;
+    long numsElements;
     ActorRef workerRouter;
     ActorRef stoper;
     int currentRound = 0;
     double piApproxi = 0.0;
     private final long beginTimeMs = System.currentTimeMillis();
 
-    public MasterActor(int nWorkers, int nMsgs, int nElements, ActorRef stoper) {
+    public MasterActor(int nWorkers, long nRounds, long nElements, ActorRef stoper) {
         this.numsWorkers = nWorkers;
-        this.numsRounds = nMsgs;
+        this.numsRounds = nRounds;
         this.numsElements = nElements;
         this.stoper = stoper;
 
