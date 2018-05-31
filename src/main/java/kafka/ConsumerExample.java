@@ -13,7 +13,6 @@ import java.util.Random;
 
 public class ConsumerExample {
     private static Logger log = LoggerFactory.getLogger(ConsumerExample.class);
-
     public static void main(String... args) throws InterruptedException {
         Properties prop = new Properties();
         prop.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
@@ -23,18 +22,21 @@ public class ConsumerExample {
         prop.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         prop.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, Serdes.String().deserializer().getClass().getName());
         prop.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, Serdes.String().deserializer().getClass().getName());
-
         KafkaConsumer consumer = new KafkaConsumer<>(prop);
-
         consumer.subscribe(Arrays.asList("mytopic"));
 
-        while(true) {
-            ConsumerRecords records = consumer.poll(2000);
+        try {
+            while (true) {
+                ConsumerRecords records = consumer.poll(200);
 
-            records.forEach(record -> {
-                log.info("message from kafka: {}", record.toString());
-            });
-            Thread.sleep(3000);
+                records.forEach(record -> {
+                    log.info("message from kafka: {}", record.toString());
+                });
+                Thread.sleep(3000);
+            }
+        }finally {
+            // close explicitly
+            consumer.close();
         }
     }
 }
