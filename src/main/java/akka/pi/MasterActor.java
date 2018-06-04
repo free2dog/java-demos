@@ -27,11 +27,7 @@ public class MasterActor extends UntypedAbstractActor{
 
     @Override
     public void onReceive(Object message) throws Throwable {
-        if (message instanceof CalculateMessage){
-            for (int roundCount = 0; roundCount < numsRounds; roundCount++) {
-                workerRouter.tell(new WorkMessage(roundCount, numsElements), getSelf());
-            }
-        }else if (message instanceof ResultMessage){
+        if (message instanceof ResultMessage){
             ResultMessage msg = (ResultMessage) message;
             double result = msg.getValue();
             piApproxi += result * 4;
@@ -42,7 +38,11 @@ public class MasterActor extends UntypedAbstractActor{
                 getContext().stop(getSelf());
             }
 
-        }else{
+        }else if (message instanceof CalculateMessage){
+            for (int roundCount = 0; roundCount < numsRounds; roundCount++) {
+                workerRouter.tell(new WorkMessage(roundCount, numsElements), getSelf());
+            }
+        }else {
             unhandled(message);
         }
     }
