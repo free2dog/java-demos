@@ -1,5 +1,9 @@
 package akka.pi;
 
+import akka.actor.ActorRef;
+import akka.actor.ActorSystem;
+import akka.actor.Props;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -12,22 +16,26 @@ public class PiMain {
     static volatile double piAppro = 0.0;
     public static void main(String... args){
 
-//        System.out.printf("number of rounds: %s, range per round: %s\n", numsRounds, numsElements);
-//
-//        // Create an Akka system
-//        ActorSystem system = ActorSystem.create("PiSystem");
-//
-//        // create the result listener, which will print the result and shutdown the system
-//        final ActorRef stoper = system.actorOf(Props.create(StoperActor.class), "stoper");
-//
-//        // create the master
-//        ActorRef master = system.actorOf(Props.create(MasterActor.class, numsWorkers, numsRounds, numsElements, stoper),"master");
-//
-//        // start the calculation
-//        master.tell(new CalculateMessage(), system.lookupRoot());
+        System.out.printf("number of rounds: %s, range per round: %s\n", numsRounds, numsElements);
 
+        // actor-based
+        calculateUsingAkka();
         // thread based calculate
-        calculateUsingThread();
+        //calculateUsingThread();
+    }
+
+    private static void calculateUsingAkka() {
+        // Create an Akka system
+        ActorSystem system = ActorSystem.create("PiSystem");
+
+        // create the result listener, which will print the result and shutdown the system
+        final ActorRef stoper = system.actorOf(Props.create(StoperActor.class), "stoper");
+
+        // create the master
+        ActorRef master = system.actorOf(Props.create(MasterActor.class, numsWorkers, numsRounds, numsElements, stoper),"master");
+
+        // start the calculation
+        master.tell(new CalculateMessage(), system.lookupRoot());
     }
 
     public static void calculateUsingThread(){
