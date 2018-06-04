@@ -7,8 +7,8 @@ public class StoperActor extends UntypedAbstractActor {
     public void onReceive(Object message) throws Throwable {
         if (message instanceof PiApproximation) {
             PiApproximation approximation = (PiApproximation) message;
-            System.out.println(String.format("\n\tPi approximation: \t\t%s\n\tCalculation time: \t%s",
-                    approximation.getApproximation(), approximation.getConsumingTimeMs()));
+            System.out.printf("Pi: %s\nActor-based consuming milliseconds: %s\n",
+                    approximation.getApproximation(), approximation.getConsumingTimeMs());
             getContext().system().terminate();
         } else {
             unhandled(message);
